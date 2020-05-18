@@ -71,7 +71,7 @@ namespace Projekt_I
         {
             RegiScreen regiScreen = new RegiScreen();
             regiScreen.Show();
-            this.Close();
+            this.Hide();
         }
     }
 }
