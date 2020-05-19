@@ -43,7 +43,7 @@ namespace Projekt_I
 
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
-                    this.Close();
+                    this.Hide();
                 }
                 else
                 {
