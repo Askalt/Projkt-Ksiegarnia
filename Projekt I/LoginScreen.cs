@@ -27,17 +27,18 @@ namespace Projekt_I
             {
                 if (sqlConn.State == ConnectionState.Closed)
                     sqlConn.Open();
-                string query = "SELECT COUNT(1) FROM [dbo].[Customers] WHERE First_name=@First_name AND Customer_ID=@Customer_ID AND Customer_password=@Customer_password";
+                string query = "SELECT COUNT(*) FROM [dbo].[Customers] WHERE First_name=@First_name AND Customer_ID=@Customer_ID AND Customer_password=@Customer_password";
                 SqlCommand sqlCmd = new SqlCommand(query, sqlConn);
                 sqlCmd.CommandType = CommandType.Text;
                 sqlCmd.Parameters.AddWithValue("@First_name", txt_username.Text);
                 sqlCmd.Parameters.AddWithValue("@Customer_ID", txt_customer_id.Text);
                 sqlCmd.Parameters.AddWithValue("@Customer_password", txt_password.Text);
+                
 
                 username = txt_username.Text;
                 username_id_lw = txt_customer_id.Text;
 
-                int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
+                int count =(int)sqlCmd.ExecuteScalar();
                 if (count == 1)
                 {
 

@@ -72,6 +72,9 @@
     <Compile Include="RegiScreen.Designer.cs">
       <DependentUpon>RegiScreen.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Cart.resx">
+      <DependentUpon>Cart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginScreen.resx">
       <DependentUpon>LoginScreen.cs</DependentUpon>
     </EmbeddedResource>

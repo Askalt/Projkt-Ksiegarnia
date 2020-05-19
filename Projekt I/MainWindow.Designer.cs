@@ -50,6 +50,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.button_shop_add = new System.Windows.Forms.Button();
+            this.logout_button_mw = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.data_grid_table)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,6 +64,7 @@
             this.data_grid_table.Size = new System.Drawing.Size(549, 296);
             this.data_grid_table.TabIndex = 0;
             this.data_grid_table.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.data_grid_table_CellClick);
+           
             // 
             // button_load_book
             // 
@@ -251,11 +253,22 @@
             this.button_shop_add.UseVisualStyleBackColor = true;
             this.button_shop_add.Click += new System.EventHandler(this.button_shop_add_Click);
             // 
+            // logout_button_mw
+            // 
+            this.logout_button_mw.Location = new System.Drawing.Point(688, 68);
+            this.logout_button_mw.Name = "logout_button_mw";
+            this.logout_button_mw.Size = new System.Drawing.Size(100, 27);
+            this.logout_button_mw.TabIndex = 22;
+            this.logout_button_mw.Text = "Wyloguj";
+            this.logout_button_mw.UseVisualStyleBackColor = true;
+            this.logout_button_mw.Click += new System.EventHandler(this.logout_button_mw_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.logout_button_mw);
             this.Controls.Add(this.button_shop_add);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -310,5 +323,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button button_shop_add;
+        private System.Windows.Forms.Button logout_button_mw;
     }
 }

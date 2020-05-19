@@ -19,14 +19,19 @@ namespace Projekt_I
 
         public static string order_id_gen;
         public static int index_ID;
-        
+        public static string index_ID_find_mw;
+
+        Cart Koszyk = new Cart();
+
+
         public MainWindow()
         {
             
             InitializeComponent();
             username_name.Text = LoginScreen.username;
             txt_username_id_mw.Text = LoginScreen.username_id_lw;
-            
+            index_ID_find_mw = txt_username_id_mw.Text;
+
             SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             try
             {
@@ -57,14 +62,23 @@ namespace Projekt_I
 
             using (SqlConnection sqlConn2 = new SqlConnection(connectionString))
             {
-                var query = "SELECT MAX ([Order_ID]) FROM [dbo].[Cart]";
+                var query = "SELECT MAX ([Order_ID]) FROM [dbo].[Cart] where Customer_ID='"+@index_ID_find_mw+"'";
                 SqlCommand sqlCmd = new SqlCommand(query, sqlConn2);
-                sqlConn2.Open();
+                sqlConn2.Open();           
                 order_id_gen = sqlCmd.ExecuteScalar().ToString();
-                index_ID = Int32.Parse(order_id_gen);
-                index_ID++;
-                txt_order_generic.Text = MainWindow.index_ID.ToString();
-
+                if (order_id_gen=="")
+                {
+                    order_id_gen = "0";
+                    index_ID = Int32.Parse(order_id_gen);
+                    index_ID++;
+                    txt_order_generic.Text = MainWindow.index_ID.ToString();
+                }
+                else
+                {
+                    index_ID = Int32.Parse(order_id_gen);
+                    index_ID++;
+                    txt_order_generic.Text = MainWindow.index_ID.ToString();
+                }
                 sqlConn2.Close();
             }
         }
@@ -221,19 +235,31 @@ namespace Projekt_I
 
         private void button_shop_add_Click(object sender, EventArgs e)
         {
+
+        }
+
+        private void logout_button_mw_Click(object sender, EventArgs e)
+        {
+            LoginScreen loginScreen = new LoginScreen();
+            loginScreen.Show();
+            this.Hide();
+
+        }
+        private void add_book(int b)
+        {
             string connectionString = @"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
                 username_id_mw = LoginScreen.username_id_lw;
                 sqlConn.Open();
 
-                if (txt_numer_book.Text == ""||txt_numer_book.Text=="0")
+                if (txt_numer_book.Text == "" || txt_numer_book.Text == "0")
                 {
                     MessageBox.Show("Prosze podać ilość!");
                 }
                 else
                 {
-                  
+
                     SqlCommand sqlCmd = new SqlCommand("CartBookAdd", sqlConn);
                     sqlCmd.CommandType = CommandType.StoredProcedure;
                     sqlCmd.Parameters.AddWithValue("@Order_ID", txt_order_generic.Text.Trim());
@@ -248,6 +274,6 @@ namespace Projekt_I
             }
         }
 
-
+  
     }
 }
