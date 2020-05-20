@@ -54,5 +54,25 @@ namespace Projekt_I
             mainWindow.Show();
             this.Hide();
         }
+
+        private void button_delete_Click(object sender, EventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            try
+            {
+                sqlConn.Open();
+                SqlCommand cmd = sqlConn.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "delete from cart where Order_id="+txt_delete_cart.Text;
+                cmd.ExecuteNonQuery();
+                sqlConn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+        }
     }
 }

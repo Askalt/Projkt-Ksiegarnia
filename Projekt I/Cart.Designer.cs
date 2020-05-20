@@ -30,6 +30,8 @@
         {
             this.data_grid_table_cart = new System.Windows.Forms.DataGridView();
             this.button_return_cart = new System.Windows.Forms.Button();
+            this.button_delete = new System.Windows.Forms.Button();
+            this.txt_delete_cart = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.data_grid_table_cart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,22 +55,44 @@
             this.button_return_cart.UseVisualStyleBackColor = true;
             this.button_return_cart.Click += new System.EventHandler(this.button_return_cart_Click_1);
             // 
+            // button_delete
+            // 
+            this.button_delete.Location = new System.Drawing.Point(557, 139);
+            this.button_delete.Name = "button_delete";
+            this.button_delete.Size = new System.Drawing.Size(75, 23);
+            this.button_delete.TabIndex = 2;
+            this.button_delete.Text = "button1";
+            this.button_delete.UseVisualStyleBackColor = true;
+            this.button_delete.Click += new System.EventHandler(this.button_delete_Click);
+            // 
+            // txt_delete_cart
+            // 
+            this.txt_delete_cart.Location = new System.Drawing.Point(638, 140);
+            this.txt_delete_cart.Name = "txt_delete_cart";
+            this.txt_delete_cart.Size = new System.Drawing.Size(100, 22);
+            this.txt_delete_cart.TabIndex = 3;
+            // 
             // Cart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.txt_delete_cart);
+            this.Controls.Add(this.button_delete);
             this.Controls.Add(this.button_return_cart);
             this.Controls.Add(this.data_grid_table_cart);
             this.Name = "Cart";
             this.Text = "Cart";
             ((System.ComponentModel.ISupportInitialize)(this.data_grid_table_cart)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.Button button_return_cart;
         public System.Windows.Forms.DataGridView data_grid_table_cart;
+        private System.Windows.Forms.Button button_delete;
+        private System.Windows.Forms.TextBox txt_delete_cart;
     }
 }

@@ -235,6 +235,78 @@ namespace Projekt_I
 
         private void button_shop_add_Click(object sender, EventArgs e)
         {
+            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            try
+            {
+                sqlConn.Open();
+                if (data_grid_table.SelectedRows.Count > 0)
+                {
+
+                    for (int i = 0; i < data_grid_table.SelectedRows.Count; i++)
+                    {
+                        bool found = false;
+                        string sql_zad = "select Book_name from Cart where Book_name='" + @txt_title_shop + "'";
+                        //  string bk = data_grid_table.SelectedRows[i].Cells[1].Value.ToString();
+
+                        if (data_grid_table.SelectedRows[i].Cells[1].Value.ToString() == sql_zad)
+                        {
+                            for (int k = 0; k < Koszyk.data_grid_table_cart.Rows.Count; k++)
+                            {
+                                Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value = ((int)Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value) + int.Parse(txt_numer_book.Text);
+                                found = true;
+
+                            }
+
+                        }
+
+                        if (found == false)
+                        {
+                         //   add_book(i);
+                        }
+
+                    }
+
+
+                }
+                sqlConn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+
+          /*  if (data_grid_table.SelectedRows.Count>0)
+            {
+               
+                for (int i = 0; i < data_grid_table.SelectedRows.Count; i++)
+                {
+                    bool found = false;
+                    string sql_zad = "select Book_name from Cart where Book_name='" + @txt_title_shop + "'";
+                    //  string bk = data_grid_table.SelectedRows[i].Cells[1].Value.ToString();
+                  
+                        if (data_grid_table.SelectedRows[i].Cells[1].Value.ToString() == sql_zad)
+                        {
+                        for (int k = 0; k < Koszyk.data_grid_table_cart.Rows.Count; k++)
+                        {
+                            Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value = ((int)Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value) +int.Parse(txt_numer_book.Text);
+                            found = true;
+
+                        }           
+                          
+                        }
+     
+                    if (found==false)
+                    {
+                        add_book(i);
+                    }
+
+                }
+                    
+ 
+            } */
+
 
         }
 
