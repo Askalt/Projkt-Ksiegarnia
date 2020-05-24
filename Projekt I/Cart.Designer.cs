@@ -41,6 +41,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.receipt_am = new System.Windows.Forms.Label();
             this.button_buy_finally = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.checkBox3 = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.data_grid_table_cart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -57,7 +59,7 @@
             // 
             // button_return_cart
             // 
-            this.button_return_cart.Location = new System.Drawing.Point(557, 8);
+            this.button_return_cart.Location = new System.Drawing.Point(12, 5);
             this.button_return_cart.Name = "button_return_cart";
             this.button_return_cart.Size = new System.Drawing.Size(159, 102);
             this.button_return_cart.TabIndex = 1;
@@ -67,7 +69,7 @@
             // 
             // button_delete
             // 
-            this.button_delete.Location = new System.Drawing.Point(586, 153);
+            this.button_delete.Location = new System.Drawing.Point(507, 16);
             this.button_delete.Name = "button_delete";
             this.button_delete.Size = new System.Drawing.Size(63, 23);
             this.button_delete.TabIndex = 2;
@@ -77,7 +79,7 @@
             // 
             // txt_delete_cart
             // 
-            this.txt_delete_cart.Location = new System.Drawing.Point(655, 154);
+            this.txt_delete_cart.Location = new System.Drawing.Point(576, 17);
             this.txt_delete_cart.Name = "txt_delete_cart";
             this.txt_delete_cart.ReadOnly = true;
             this.txt_delete_cart.Size = new System.Drawing.Size(130, 22);
@@ -85,9 +87,9 @@
             // 
             // button_delete_order_cart
             // 
-            this.button_delete_order_cart.Location = new System.Drawing.Point(392, 8);
+            this.button_delete_order_cart.Location = new System.Drawing.Point(342, 5);
             this.button_delete_order_cart.Name = "button_delete_order_cart";
-            this.button_delete_order_cart.Size = new System.Drawing.Size(159, 99);
+            this.button_delete_order_cart.Size = new System.Drawing.Size(159, 102);
             this.button_delete_order_cart.TabIndex = 4;
             this.button_delete_order_cart.Text = "Zamówienia";
             this.button_delete_order_cart.UseVisualStyleBackColor = true;
@@ -95,7 +97,7 @@
             // 
             // button_delete_order
             // 
-            this.button_delete_order.Location = new System.Drawing.Point(586, 183);
+            this.button_delete_order.Location = new System.Drawing.Point(507, 46);
             this.button_delete_order.Name = "button_delete_order";
             this.button_delete_order.Size = new System.Drawing.Size(91, 51);
             this.button_delete_order.TabIndex = 5;
@@ -105,7 +107,7 @@
             // 
             // txt_delete_order_cart
             // 
-            this.txt_delete_order_cart.Location = new System.Drawing.Point(683, 182);
+            this.txt_delete_order_cart.Location = new System.Drawing.Point(604, 45);
             this.txt_delete_order_cart.Name = "txt_delete_order_cart";
             this.txt_delete_order_cart.ReadOnly = true;
             this.txt_delete_order_cart.Size = new System.Drawing.Size(102, 22);
@@ -113,9 +115,9 @@
             // 
             // button_refresh_cart
             // 
-            this.button_refresh_cart.Location = new System.Drawing.Point(227, 9);
+            this.button_refresh_cart.Location = new System.Drawing.Point(177, 5);
             this.button_refresh_cart.Name = "button_refresh_cart";
-            this.button_refresh_cart.Size = new System.Drawing.Size(159, 98);
+            this.button_refresh_cart.Size = new System.Drawing.Size(159, 102);
             this.button_refresh_cart.TabIndex = 7;
             this.button_refresh_cart.Text = "Odśwież";
             this.button_refresh_cart.UseVisualStyleBackColor = true;
@@ -167,11 +169,33 @@
             this.button_buy_finally.UseVisualStyleBackColor = true;
             this.button_buy_finally.Click += new System.EventHandler(this.button_buy_finally_Click);
             // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(604, 122);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(112, 21);
+            this.checkBox1.TabIndex = 14;
+            this.checkBox1.Text = "Kurier(+15zł)";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // checkBox3
+            // 
+            this.checkBox3.AutoSize = true;
+            this.checkBox3.Location = new System.Drawing.Point(604, 176);
+            this.checkBox3.Name = "checkBox3";
+            this.checkBox3.Size = new System.Drawing.Size(128, 21);
+            this.checkBox3.TabIndex = 15;
+            this.checkBox3.Text = "Autograf(+40zł)";
+            this.checkBox3.UseVisualStyleBackColor = true;
+            // 
             // Cart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkBox3);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.button_buy_finally);
             this.Controls.Add(this.receipt_am);
             this.Controls.Add(this.label2);
@@ -207,5 +231,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label receipt_am;
         private System.Windows.Forms.Button button_buy_finally;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox checkBox3;
     }
 }

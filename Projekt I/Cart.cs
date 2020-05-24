@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -180,28 +181,51 @@ namespace Projekt_I
             {
                 MessageBox.Show("Koszyk jest pusty prosze coś dodać");
             }
-            else
+             if (checkBox1.CheckState == CheckState.Checked & checkBox3.CheckState==CheckState.Unchecked)
             {
-                MessageBox.Show("Wpłać ktote:"+receipt_label.Text+ " na numer banku 82 1020 5226 0000 6102 0417 7895");
+                int help_f;
+                help_f = int.Parse(receipt_label.Text);
+                help_f += 15;
+                MessageBox.Show("Wpłać ktote:" + help_f + " na numer banku 82 1020 5226 0000 6102 0417 7895");
             }
-            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            try
-            {
-               
-                sqlConn.Open();
-                SqlCommand cmd = sqlConn.CreateCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "TRUNCATE cart";
-                cmd.ExecuteNonQuery();
-                sqlConn.Close();
-            }
-            catch (Exception ex)
-            {
 
-                MessageBox.Show(ex.Message);
-                throw;
+             if (checkBox3.CheckState == CheckState.Checked & checkBox1.CheckState == CheckState.Unchecked)
+            {
+                int help_f;
+                help_f = int.Parse(receipt_label.Text);
+                help_f += 40;
+                MessageBox.Show("Wpłać ktote:" + help_f + " na numer banku 82 1020 5226 0000 6102 0417 7895");
+
             }
-            refresh_cart();
+             if (checkBox1.CheckState == CheckState.Checked & checkBox3.CheckState == CheckState.Checked)
+            {
+                int help_f;
+                help_f = int.Parse(receipt_label.Text);
+                help_f += 55;
+                MessageBox.Show("Wpłać ktote:" + help_f + " na numer banku 82 1020 5226 0000 6102 0417 7895");
+            }
+  
+
+
+
+            //SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            //try
+            //{
+
+            //    sqlConn.Open();
+            //    SqlCommand cmd = sqlConn.CreateCommand();
+            //    cmd.CommandType = CommandType.Text;
+            //    cmd.CommandText = "TRUNCATE cart";
+            //    cmd.ExecuteNonQuery();
+            //    sqlConn.Close();
+            //}
+            //catch (Exception ex)
+            //{
+
+            //    MessageBox.Show(ex.Message);
+            //    throw;
+            //}
+            //refresh_cart();
         }
     }
 }
