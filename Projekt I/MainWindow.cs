@@ -214,22 +214,13 @@ namespace Projekt_I
 
         private void button_shop_add_Click(object sender, EventArgs e)
         {
-            id_generic();
+            
             string connectionString = @"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
             using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
                 username_id_mw = LoginScreen.username_id_lw;
                 sqlConn.Open();
 
-
-                if (index_ID == 10)
-                {
-                    MessageBox.Show("Koszyk jest pełny!");
-                    button_shop_add.Enabled = false;
-                }
-                else
-                {
-                    button_shop_add.Enabled = true;
 
                     if (txt_numer_book.Text == "" || txt_numer_book.Text == "0")
                     {
@@ -249,7 +240,7 @@ namespace Projekt_I
                         MessageBox.Show("Dodano do koszyka!");
 
                     }
-               }
+                id_generic();
             }
 
 
@@ -343,15 +334,16 @@ namespace Projekt_I
                 SqlCommand sqlCmd = new SqlCommand(query, sqlConn2);
                 sqlConn2.Open();
                 order_id_gen = sqlCmd.ExecuteScalar().ToString();
-                if (order_id_gen =="")
+                if (order_id_gen == "")
                 {
-                    index_ID = 0;
+                    Random rnd = new Random();
+                    index_ID = rnd.Next();
                     txt_order_generic.Text = MainWindow.index_ID.ToString();
                 }
                 else
                 {
-                    index_ID = Int32.Parse(order_id_gen);
-                    index_ID++;
+                    Random rnd = new Random();
+                    index_ID = rnd.Next();
                     txt_order_generic.Text = MainWindow.index_ID.ToString();
 
                 }
