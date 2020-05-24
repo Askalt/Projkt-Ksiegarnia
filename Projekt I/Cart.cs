@@ -14,7 +14,8 @@ namespace Projekt_I
     public partial class Cart : Form
     {
         public static string index_ID_find_cw;
-        
+
+
         public Cart()
         {
             index_ID_find_cw = MainWindow.index_ID_find_mw;
@@ -132,6 +133,39 @@ namespace Projekt_I
             }
 
         }
+        private void button_buy_Click(object sender, EventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            try
+            {
+
+                sqlConn.Open();
+                string query = "select SUM((CAST(Price as decimal) * Amount)) as Rachunek from Cart where Customer_ID =" + index_ID_find_cw;
+                SqlCommand sqlCommand = new SqlCommand(query, sqlConn);
+                sqlCommand.CommandType = CommandType.Text;
+
+                
+
+                sqlCommand.ExecuteNonQuery();
+
+                SqlDataAdapter dataAdapt = new SqlDataAdapter(sqlCommand);
+                DataTable dt = new DataTable("[dbo].[Cart]");
+                dataAdapt.Fill(dt);
+                data_grid_table_cart.DataSource = dt.DefaultView;
+
+
+                sqlConn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+
+           
+
+        }
         private void refresh_order()
         {
             SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
@@ -163,16 +197,6 @@ namespace Projekt_I
             }
         }
 
-        private void button_buy_Click(object sender, EventArgs e)
-        {
-            receipt_label.Text = "0";
-            decimal help_a=0,help_b=0;
-            for (int i = 0; i < data_grid_table_cart.Rows.Count; i++)
-            {
-                help_a +=Convert.ToDecimal(data_grid_table_cart.Rows[i].Cells[1].Value);
-                help_b += Convert.ToDecimal(data_grid_table_cart.Rows[i].Cells[2].Value);
-            }
-            receipt_label.Text = help_a.ToString();
-        }
+
     }
 }
