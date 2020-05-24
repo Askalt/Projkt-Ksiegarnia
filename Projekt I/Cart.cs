@@ -19,12 +19,96 @@ namespace Projekt_I
         {
             index_ID_find_cw = MainWindow.index_ID_find_mw;
             InitializeComponent();
+            refresh_cart();
+        }
+        private void button_return_cart_Click_1(object sender, EventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Hide();
+        }
+
+        private void button_delete_Click(object sender, EventArgs e)
+        {
             SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             try
             {
-                
                 sqlConn.Open();
-                string query = "select * from Cart where Customer_ID='"+index_ID_find_cw+"'";
+                SqlCommand cmd = sqlConn.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "delete from cart where Book_name='" + txt_delete_cart.Text + "'";
+                cmd.ExecuteNonQuery();
+                sqlConn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+
+            //foreach (DataGridViewRow row in data_grid_table_cart.SelectedRows)
+            //{
+            //    data_grid_table_cart.Rows.RemoveAt(row.Index);
+            //}
+            refresh_cart();
+        }
+
+        private void data_grid_table_cart_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex != -1)
+            {
+                DataGridViewRow viewRow = data_grid_table_cart.Rows[e.RowIndex];
+                txt_delete_cart.Text = viewRow.Cells[0].Value.ToString();
+               
+
+            }
+        }
+ 
+
+        private void button_delete_order_cart_Click(object sender, EventArgs e)
+        {
+            refresh_order();
+        }
+
+        private void button_delete_order_Click(object sender, EventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            try
+            {
+                if (txt_delete_order_cart.Text=="")
+                {
+                    MessageBox.Show("Podaj numer Zamówienia(Order_ID)");
+                }
+                sqlConn.Open();
+                SqlCommand cmd = sqlConn.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "delete from cart where Order_ID='" + txt_delete_order_cart.Text + "'";
+                cmd.ExecuteNonQuery();
+                sqlConn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+            refresh_order();
+        }
+
+        private void button_refresh_cart_Click(object sender, EventArgs e)
+        {
+            refresh_cart();
+        }
+       
+        private void refresh_cart()
+        {
+            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            try
+            {
+
+                sqlConn.Open();
+                string query = "select Book_name, sum(cast([Amount] as int)) as Ilosc,Price from Cart where Customer_ID='" + index_ID_find_cw + "'" + " group by Book_name,Price";
                 SqlCommand sqlCommand = new SqlCommand(query, sqlConn);
                 sqlCommand.CommandType = CommandType.Text;
 
@@ -46,25 +130,29 @@ namespace Projekt_I
                 MessageBox.Show(ex.Message);
                 throw;
             }
-    
-        }
-        private void button_return_cart_Click_1(object sender, EventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-            this.Hide();
-        }
 
-        private void button_delete_Click(object sender, EventArgs e)
+        }
+        private void refresh_order()
         {
             SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             try
             {
+
                 sqlConn.Open();
-                SqlCommand cmd = sqlConn.CreateCommand();
-                cmd.CommandType = CommandType.Text;
-                cmd.CommandText = "delete from cart where Order_id="+txt_delete_cart.Text;
-                cmd.ExecuteNonQuery();
+                string query = "select Book_name, sum(cast([Amount] as int)) as Ilosc,Price,Order_ID from Cart where Customer_ID='" + index_ID_find_cw + "'" + " group by Book_name,Price,Order_ID";
+                SqlCommand sqlCommand = new SqlCommand(query, sqlConn);
+                sqlCommand.CommandType = CommandType.Text;
+
+
+
+                sqlCommand.ExecuteNonQuery();
+
+                SqlDataAdapter dataAdapt = new SqlDataAdapter(sqlCommand);
+                DataTable dt = new DataTable("[dbo].[Cart]");
+                dataAdapt.Fill(dt);
+                data_grid_table_cart.DataSource = dt.DefaultView;
+
+
                 sqlConn.Close();
             }
             catch (Exception ex)
@@ -73,6 +161,18 @@ namespace Projekt_I
                 MessageBox.Show(ex.Message);
                 throw;
             }
+        }
+
+        private void button_buy_Click(object sender, EventArgs e)
+        {
+            receipt_label.Text = "0";
+            decimal help_a=0,help_b=0;
+            for (int i = 0; i < data_grid_table_cart.Rows.Count; i++)
+            {
+                help_a +=Convert.ToDecimal(data_grid_table_cart.Rows[i].Cells[1].Value);
+                help_b += Convert.ToDecimal(data_grid_table_cart.Rows[i].Cells[2].Value);
+            }
+            receipt_label.Text = help_a.ToString();
         }
     }
 }

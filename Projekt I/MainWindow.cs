@@ -58,29 +58,7 @@ namespace Projekt_I
                 throw;
             }
 
-            string connectionString = @"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-
-            using (SqlConnection sqlConn2 = new SqlConnection(connectionString))
-            {
-                var query = "SELECT MAX ([Order_ID]) FROM [dbo].[Cart] where Customer_ID='"+@index_ID_find_mw+"'";
-                SqlCommand sqlCmd = new SqlCommand(query, sqlConn2);
-                sqlConn2.Open();           
-                order_id_gen = sqlCmd.ExecuteScalar().ToString();
-                if (order_id_gen=="")
-                {
-                    order_id_gen = "0";
-                    index_ID = Int32.Parse(order_id_gen);
-                    index_ID++;
-                    txt_order_generic.Text = MainWindow.index_ID.ToString();
-                }
-                else
-                {
-                    index_ID = Int32.Parse(order_id_gen);
-                    index_ID++;
-                    txt_order_generic.Text = MainWindow.index_ID.ToString();
-                }
-                sqlConn2.Close();
-            }
+            id_generic();
         }
         private void username_name_TextChanged(object sender, EventArgs e)
         {
@@ -230,82 +208,92 @@ namespace Projekt_I
                 txt_author_shop.Text = viewRow.Cells[0].Value.ToString();
                 txt_title_shop.Text = viewRow.Cells[1].Value.ToString();
                 txt_price_shop.Text = viewRow.Cells[3].Value.ToString();
+                id_generic();
             }
         }
 
         private void button_shop_add_Click(object sender, EventArgs e)
         {
-            
-            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            try
+            id_generic();
+            string connectionString = @"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            using (SqlConnection sqlConn = new SqlConnection(connectionString))
             {
+                username_id_mw = LoginScreen.username_id_lw;
                 sqlConn.Open();
-                string sql_zad = "select Book_name from Cart where Book_name='" + @txt_title_shop + "'";
-                SqlCommand sqlCommand = new SqlCommand(sql_zad, sqlConn);
 
 
-                if (data_grid_table.SelectedRows.Count > 0)
+                if (index_ID == 10)
                 {
+                    MessageBox.Show("Koszyk jest pełny!");
+                    button_shop_add.Enabled = false;
+                }
+                else
+                {
+                    button_shop_add.Enabled = true;
 
-                    for (int i = 0; i < data_grid_table.SelectedRows.Count; i++)
+                    if (txt_numer_book.Text == "" || txt_numer_book.Text == "0")
                     {
-                        bool found = false;
-                        for (int k = 0; k < Koszyk.data_grid_table_cart.Rows.Count; k++)
-                        {
+                        MessageBox.Show("Prosze podać ilość!");
+                    }
+                    else
+                    {
 
-                            if (data_grid_table.SelectedRows[i].Cells[1].Value.ToString() == ???) // wyciaganie dany z bazy na string
-                              {
-                                Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value = ((int)Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value) +1;
-                                found = true;
-                            }
-                        }
-                        if (found == false)
-                        {
-                              add_book(i);
-                        }
+                        SqlCommand sqlCmd = new SqlCommand("CartBookAdd", sqlConn);
+                        sqlCmd.CommandType = CommandType.StoredProcedure;
+                        sqlCmd.Parameters.AddWithValue("@Order_ID", txt_order_generic.Text.Trim());
+                        sqlCmd.Parameters.AddWithValue("@Customer_ID", txt_username_id_mw.Text.Trim());
+                        sqlCmd.Parameters.AddWithValue("@Book_name", txt_title_shop.Text.Trim());
+                        sqlCmd.Parameters.AddWithValue("@Price", txt_price_shop.Text.Trim());
+                        sqlCmd.Parameters.AddWithValue("@Amount", txt_numer_book.Text.Trim());
+                        sqlCmd.ExecuteNonQuery();
+                        MessageBox.Show("Dodano do koszyka!");
 
                     }
-
-
-                }
-                sqlConn.Close();
-            }
-            catch (Exception ex)
-            {
-
-                MessageBox.Show(ex.Message);
-                throw;
+               }
             }
 
-          /*  if (data_grid_table.SelectedRows.Count>0)
-            {
-               
-                for (int i = 0; i < data_grid_table.SelectedRows.Count; i++)
-                {
-                    bool found = false;
-                    string sql_zad = "select Book_name from Cart where Book_name='" + @txt_title_shop + "'";
-                    //  string bk = data_grid_table.SelectedRows[i].Cells[1].Value.ToString();
-                  
-                        if (data_grid_table.SelectedRows[i].Cells[1].Value.ToString() == sql_zad)
-                        {
-                        for (int k = 0; k < Koszyk.data_grid_table_cart.Rows.Count; k++)
-                        {
-                            Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value = ((int)Koszyk.data_grid_table_cart.Rows[k].Cells[4].Value) +int.Parse(txt_numer_book.Text);
-                            found = true;
 
-                        }           
-                          
-                        }
-     
-                    if (found==false)
-                    {
-                        add_book(i);
-                    }
 
-                }
-                    
- 
-            } */
+
+            //    int iloscwierszywkoszyku = Koszyk.data_grid_table_cart.Rows.Count;
+            //    if (Koszyk.data_grid_table_cart.Rows.Count>0)
+            //    {
+            //        for (int i = 0; i < data_grid_table.SelectedRows.Count; i++)
+            //        {
+
+            //            bool found = false;
+            //            for (int k = 0; k < Koszyk.data_grid_table_cart.Rows.Count; k++)
+            //            {
+            //                if (Koszyk.data_grid_table_cart==null||Koszyk.data_grid_table_cart.Rows.Count==0) // zrobisz tutaj sql z nie powtaraniem sie elementów w tabeli a sumowaniem ich ilosci i dobranocki :3
+            //                {
+            //                    LoginScreen loginScreen = new LoginScreen();
+            //                    loginScreen.Show();
+            //                    this.Hide();
+            //                    found = true;
+            //                }
+            //                else if (Koszyk.data_grid_table_cart.Rows[k].Cells[2].Value!=null)
+            //                {
+            //                    LoginScreen loginScreen = new LoginScreen();
+            //                    loginScreen.Show();
+            //                    this.Hide();
+            //                    found = true;
+            //                }
+            //if (data_grid_table.Rows[i].Cells[1].Value.ToString() == Koszyk.data_grid_table_cart.Rows[k].Cells[2].Value.ToString())
+            //{
+            //    LoginScreen loginScreen = new LoginScreen();
+            //    loginScreen.Show();
+            //    this.Hide();
+            //    found = true;
+
+            //}
+            //else
+            //{
+            //    Cart cart = new Cart();
+            //    cart.Show();
+            //    this.Hide();
+            //    found = true;
+            //}
+
 
 
         }
@@ -346,6 +334,29 @@ namespace Projekt_I
             }
         }
 
-  
+        private void id_generic()
+        {
+            string connectionString = @"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            using (SqlConnection sqlConn2 = new SqlConnection(connectionString))
+            {
+                var query = "SELECT MAX ([Order_ID]) FROM [dbo].[Cart] where Customer_ID='" + @index_ID_find_mw + "'";
+                SqlCommand sqlCmd = new SqlCommand(query, sqlConn2);
+                sqlConn2.Open();
+                order_id_gen = sqlCmd.ExecuteScalar().ToString();
+                if (order_id_gen =="")
+                {
+                    index_ID = 0;
+                    txt_order_generic.Text = MainWindow.index_ID.ToString();
+                }
+                else
+                {
+                    index_ID = Int32.Parse(order_id_gen);
+                    index_ID++;
+                    txt_order_generic.Text = MainWindow.index_ID.ToString();
+
+                }
+                sqlConn2.Close();
+            }
+        }
     }
 }
