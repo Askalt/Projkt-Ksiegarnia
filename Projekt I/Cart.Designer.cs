@@ -40,6 +40,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.receipt_am = new System.Windows.Forms.Label();
+            this.button_buy_finally = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.data_grid_table_cart)).BeginInit();
             this.SuspendLayout();
             // 
@@ -156,11 +157,22 @@
             this.receipt_am.TabIndex = 12;
             this.receipt_am.Text = "0";
             // 
+            // button_buy_finally
+            // 
+            this.button_buy_finally.Location = new System.Drawing.Point(614, 345);
+            this.button_buy_finally.Name = "button_buy_finally";
+            this.button_buy_finally.Size = new System.Drawing.Size(149, 93);
+            this.button_buy_finally.TabIndex = 13;
+            this.button_buy_finally.Text = "Kup";
+            this.button_buy_finally.UseVisualStyleBackColor = true;
+            this.button_buy_finally.Click += new System.EventHandler(this.button_buy_finally_Click);
+            // 
             // Cart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_buy_finally);
             this.Controls.Add(this.receipt_am);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -194,5 +206,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label receipt_am;
+        private System.Windows.Forms.Button button_buy_finally;
     }
 }
