@@ -21,7 +21,10 @@ namespace Projekt_I
         {
             index_ID_find_cw = MainWindow.index_ID_find_mw;
             InitializeComponent();
+
             refresh_order();
+
+
         }
         private void button_return_cart_Click_1(object sender, EventArgs e)
         {
@@ -177,9 +180,12 @@ namespace Projekt_I
 
         private void button_buy_finally_Click(object sender, EventArgs e)
         {
-            if (receipt_label.Text=="0")
+
+            if (checkBox1.CheckState == CheckState.Unchecked & checkBox3.CheckState == CheckState.Unchecked)
             {
-                MessageBox.Show("Koszyk jest pusty prosze coś dodać");
+                int help_f;
+                help_f = int.Parse(receipt_label.Text);
+                MessageBox.Show("Wpłać ktote:" + help_f + " na numer banku 82 1020 5226 0000 6102 0417 7895");
             }
              if (checkBox1.CheckState == CheckState.Checked & checkBox3.CheckState==CheckState.Unchecked)
             {
@@ -204,28 +210,28 @@ namespace Projekt_I
                 help_f += 55;
                 MessageBox.Show("Wpłać ktote:" + help_f + " na numer banku 82 1020 5226 0000 6102 0417 7895");
             }
-  
 
 
 
-            //SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
-            //try
-            //{
 
-            //    sqlConn.Open();
-            //    SqlCommand cmd = sqlConn.CreateCommand();
-            //    cmd.CommandType = CommandType.Text;
-            //    cmd.CommandText = "TRUNCATE cart";
-            //    cmd.ExecuteNonQuery();
-            //    sqlConn.Close();
-            //}
-            //catch (Exception ex)
-            //{
+            SqlConnection sqlConn = new SqlConnection(@"Data Source=DESKTOP-MPTGS57\SQLEXPRESS;Initial Catalog=BookStore;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            try
+            {
 
-            //    MessageBox.Show(ex.Message);
-            //    throw;
-            //}
-            //refresh_cart();
+                sqlConn.Open();
+                SqlCommand cmd = sqlConn.CreateCommand();
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandText = "Delete from Cart where Customer_ID='" + index_ID_find_cw + "'";
+                cmd.ExecuteNonQuery();
+                sqlConn.Close();
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message);
+                throw;
+            }
+            refresh_cart();
         }
     }
 }
